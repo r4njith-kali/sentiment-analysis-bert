@@ -1,0 +1,67 @@
+
+#Byte-compiled / DLL files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Virtual Enviroment
+venv/
+env/
+*.venv
+.env
+
+# Distributions
+
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+pip-wheel-metadata/
+share/python-wheels/
+*.egg-info
+.installed.cfg
+*.egg
+MANIFEST
+
+# Output Directories (Models, Logs, Results)
+output/
+results/
+logs/
+lightning_logs/
+wandb/
+
+# Large Data Files (add specific patterns if needed)
+data/*.csv
+data/*.jsonl
+data/*.tsv
+data/*.parquet
+# Keep small sample files if you add them explicitly later
+# !data/sample.csv
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# IDE files
+.idea/
+.vscode/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Secrets (Just good practice, even if not used now)
+*.key
+*.pem
+credentials.*
