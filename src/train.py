@@ -107,7 +107,16 @@ trainer = Trainer(
     compute_metrics = compute_metrics
 )
 
+print("Starting training...")
+trainer.train()
 
+print("Training Finished.")
 
+# Save model to output dir
 
+final_model_path = os.path.join(run_output_dir, "best_model")
+print(f"Saving the best model to: {final_model_path}")
+trainer.save_model(final_model_path)
+tokenizer.save_pretrained(final_model_path)
 
+print("Best model saved successfully.")
