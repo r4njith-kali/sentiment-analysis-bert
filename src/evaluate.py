@@ -10,8 +10,8 @@ from transformers import (
     Trainer,
     set_seed
 )
-from src import config # Your configuration file
-from src.data_loader import load_and_preprocess_data # Your data loading function
+import config # Your configuration file
+from data_loader import load_and_preprocess_data # Your data loading function
 import torch # Import torch to check device
 
 def evaluate_model(model_path, dataset_split="test"):
