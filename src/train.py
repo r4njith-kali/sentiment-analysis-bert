@@ -11,7 +11,7 @@ from transformers import (
     set_seed
 )
 import config
-from src.data_loader import load_and_preprocess_data
+from data_loader import load_and_preprocess_data
 import torch
 
 print(f"Setting random seed to: {config.SEED}")
@@ -44,7 +44,7 @@ num_labels = len(train_dataset.unique("labels"))
 
 print(f"Loading model '{config.MODEL_NAME}' for sequence classification with {num_labels} labels.")
 
-model = AutoModelForSequenceClassification(
+model = AutoModelForSequenceClassification.from_pretrained(
     config.MODEL_NAME,
     num_labels=num_labels
 )
@@ -76,15 +76,15 @@ print(f"Logging directory set to: {run_logging_dir}")
 training_args = TrainingArguments(
     output_dir = run_output_dir,
     logging_dir = run_logging_dir,
-    num_train_epochs = config.config.NUM_EPOCHS,
+    num_train_epochs = config.NUM_EPOCHS,
     per_device_train_batch_size = config.TRAIN_BATCH_SIZE,
-    per_device_evail_batch_size = config.EVAL_BATCH_SIZE,
+    per_device_eval_batch_size = config.EVAL_BATCH_SIZE,
     learning_rate = config.LEARNING_RATE,
     weight_decay = config.WEIGHT_DECAY,
     warmup_steps = config.WARMUP_STEPS,
 
-    evaluation_strategy = "epochs",
-    save_strategy = "epochs",
+    evaluation_strategy = "epoch",
+    save_strategy = "epoch",
     logging_strategy = "steps",
     logging_steps = 100,
     save_total_limit = 2,
