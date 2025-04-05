@@ -63,5 +63,36 @@ def compute_metrics(eval_pred):
     predictions = np.argmax(logits, axis = -1)
     return metric.compute(predictions, references = labels)
 
-# Define Training Arguments
+# -----Define Training Arguments-------
+
+# Create a unique output dir for this specific run
+
+run_output_dir = os.path.join(config.OUTPUT_DIR_BASE, f"{config.MODEL_NAME}-finetuned-{config.DATASET_NAME}")
+run_logging_dir = os.path.join(config.LOGGING_DIR_BASE, f"{config.MODEL_NAME}-finetuned-{config.DATASET_NAME}")
+
+print(f"Training output will be saved to: {run_output_dir}")
+print(f"Logging directory set to: {run_logging_dir}")
+
+training_args = TrainingArguments(
+    output_dir = run_output_dir,
+    logging_dir = run_logging_dir,
+    num_train_epochs = config.config.NUM_EPOCHS,
+    per_device_train_batch_size = config.TRAIN_BATCH_SIZE,
+    per_device_evail_batch_size = config.EVAL_BATCH_SIZE,
+    learning_rate = config.LEARNING_RATE,
+    weight_decay = config.WEIGHT_DECAY,
+    warmup_steps = config.WARMUP_STEPS,
+
+    evaluation_strategy = "epochs",
+    save_strategy = "epochs",
+    logging_strategy = "steps",
+    logging_steps = 100,
+    save_total_limit = 2,
+    load_best_model_at_end = True,
+    metric_for_best_model = "accuracy",
+    greater_is_better = True,
+
+    fp16 = torch.cuda.is_available(),
+    seed=config.SEED
+)
 
