@@ -40,4 +40,28 @@ print(f"Number of evaluation examples: {len(eval_dataset)}")
 
 # ------ LOAD MODEL --------
 
+num_labels = len(train_dataset.unique("labels"))
+
+print(f"Loading model '{config.MODEL_NAME}' for sequence classification with {num_labels} labels.")
+
+model = AutoModelForSequenceClassification(
+    config.MODEL_NAME,
+    num_labels=num_labels
+)
+
+# Move model to CPU, if GPU avail. more to GPU
+
+print(f"Moving model to device: {config.DEVICE}")
+model.to(config.DEVICE)
+
+# DEFINE METRICS
+
+metric = evaluate.load("accuracy")
+
+def compute_metrics(eval_pred):
+    logits, labels = eval_pred
+    predictions = np.argmax(logits, axis = -1)
+    return metric.compute(predictions, references = labels)
+
+# Define Training Arguments
 
