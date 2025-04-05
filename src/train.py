@@ -120,3 +120,9 @@ trainer.save_model(final_model_path)
 tokenizer.save_pretrained(final_model_path)
 
 print("Best model saved successfully.")
+
+# Evaluate after training 
+print("Running final evaluation on the evaluation set...")
+eval_results = trainer.evaluate()
+print("Final Evaluation Results:")
+print(eval_results)
