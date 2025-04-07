@@ -3,7 +3,7 @@
 
 1.  **Clone the repository:**
     ```bash
-    git clone <your-github-repo-url> # Replace with your repo URL
+    git clone <https://github.com/r4njith-kali/sentiment-analysis-bert> 
     cd sentiment-analysis-bert
     ```
 
@@ -16,7 +16,7 @@
         ```
     *   Using `conda`:
         ```bash
-        conda create -n sentiment_env python=3.9 # Or your preferred Python version
+        conda create -n sentiment_env python=3.9
         conda activate sentiment_env
         ```
 
@@ -100,7 +100,3 @@ Key hyperparameters and paths can be modified in `src/config.py`:
 *   Hugging Face `evaluate`
 *   NumPy
 *   Git
-
-## License
-
-*(Optional: Add your chosen license here. E.g., MIT License)*
