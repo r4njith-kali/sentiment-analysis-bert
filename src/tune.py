@@ -95,91 +95,87 @@ base_training_args = TrainingArguments(
     seed = config.SEED,
     per_device_train_batch_size = config.TRAIN_BATCH_SIZE
 )
-# ------ LOAD MODEL --------
 
-num_labels = len(train_dataset.unique("labels"))
-
-print(f"Loading model '{config.MODEL_NAME}' for sequence classification with {num_labels} labels.")
-
-model = AutoModelForSequenceClassification.from_pretrained(
-    config.MODEL_NAME,
-    num_labels=num_labels
-)
-
-# Move model to CPU, if GPU avail. more to GPU
-
-print(f"Moving model to device: {config.DEVICE}")
-model.to(config.DEVICE)
-
-# DEFINE METRICS
-
-metric = evaluate.load("accuracy")
-
-def compute_metrics(eval_pred):
-    logits, labels = eval_pred
-    predictions = np.argmax(logits, axis = -1)
-    return metric.compute(predictions=predictions, references = labels)
-
-# -----Define Training Arguments-------
-
-# Create a unique output dir for this specific run
-
-run_output_dir = os.path.join(config.OUTPUT_DIR_BASE, f"{config.MODEL_NAME}-finetuned-{config.DATASET_NAME}")
-run_logging_dir = os.path.join(config.LOGGING_DIR_BASE, f"{config.MODEL_NAME}-finetuned-{config.DATASET_NAME}")
-
-print(f"Training output will be saved to: {run_output_dir}")
-print(f"Logging directory set to: {run_logging_dir}")
-
-training_args = TrainingArguments(
-    output_dir = run_output_dir,
-    logging_dir = run_logging_dir,
-    num_train_epochs = config.NUM_EPOCHS,
-    per_device_train_batch_size = config.TRAIN_BATCH_SIZE,
-    per_device_eval_batch_size = config.EVAL_BATCH_SIZE,
-    learning_rate = config.LEARNING_RATE,
-    weight_decay = config.WEIGHT_DECAY,
-    warmup_steps = config.WARMUP_STEPS,
-
-    evaluation_strategy = "epoch",
-    save_strategy = "epoch",
-    logging_strategy = "steps",
-    logging_steps = 100,
-    save_total_limit = 2,
-    load_best_model_at_end = True,
-    metric_for_best_model = "accuracy",
-    greater_is_better = True,
-
-    fp16 = torch.cuda.is_available(),
-    seed=config.SEED
-)
-
-# Intialize Trainer
+# Initialize trainer
 
 trainer = Trainer(
-    model = model,
-    args = training_args,
-    train_dataset = train_dataset,
-    eval_dataset = eval_dataset,
-    tokenizer = tokenizer,
+    args = base_training_args,
+    model_init = model_init,
+    train_dataset=train_dataset,
+    eval_dataset=eval_dataset,
+    tokenizer=tokenizer,
     compute_metrics = compute_metrics
 )
 
-print("Starting training...")
-trainer.train()
+# Run hyperparamter search
 
-print("Training Finished.")
+print("Starting hyperparameter search with Optuna...")
 
-# Save model to output dir
+best_run = trainer.hyperparamter_search(
+    hp_space = optuna_hp_space,
+    n_trials = 10,
+    direction = "maximize",
+    backend = "optuna"
+)
 
-final_model_path = os.path.join(run_output_dir, "best_model")
-print(f"Saving the best model to: {final_model_path}")
-trainer.save_model(final_model_path)
-tokenizer.save_pretrained(final_model_path)
+print("\n--- Hyperparameter Search Complete ---")
+print(f"Best Run ID: {best_run.run_id}")
 
-print("Best model saved successfully.")
+print(f"Best Objective (eval_accuracy): {best_run.objective:.4f}")
+print("Best Hyperparameters found:")
+for param, value in best_run.hyperparameters.items():
+    print(f"- {param}: {value}")
 
-# Evaluate after training 
-print("Running final evaluation on the evaluation set...")
-eval_results = trainer.evaluate()
-print("Final Evaluation Results:")
-print(eval_results)
+
+# Train Final Model with Best Hyperparameters found
+
+print("\n--- Training Final Model with Best Hyperparameters ---")
+best_params = best_run.hyperparameters
+
+final_output_dir = os.path.join(config.OUTPUT_DIR_BASE, "best-tuned-model")
+print(f"Final model output directory: {final_output_dir}")
+
+final_training_args = TrainingArguments(
+    output_dir=final_output_dir,
+    learning_rate=best_params["learning_rate"],
+    num_train_epochs=best_params["num_train_epochs"],
+    weight_decay=best_params.get("weight_decay", config.WEIGHT_DECAY), 
+    warmup_steps=best_params.get("warmup_steps", config.WARMUP_STEPS),
+
+    per_device_train_batch_size=best_params.get("per_device_train_batch_size", config.TRAIN_BATCH_SIZE),
+
+    # --- Copy other necessary fixed arguments ---
+    per_device_eval_batch_size=config.EVAL_BATCH_SIZE,
+    evaluation_strategy="epoch",
+    save_strategy="epoch",
+    load_best_model_at_end=True,
+    metric_for_best_model="accuracy",
+    greater_is_better=True,
+    logging_strategy="steps",
+    logging_steps=100, 
+    save_total_limit=2,
+    fp16=torch.cuda.is_available(),
+    seed=config.SEED,
+    report_to="all", 
+    disable_tqdm=False, 
+)
+
+
+final_trainer = Trainer(
+    model_init=model_init, # Still use model_init for a fresh start
+    args=final_training_args,
+    train_dataset=train_dataset,
+    eval_dataset=eval_dataset,
+    tokenizer=tokenizer,
+    compute_metrics=compute_metrics,
+)
+
+print("Starting final training run...")
+final_trainer.train()
+
+print(f"Saving final best model to: {final_output_dir}")
+final_trainer.save_model(final_output_dir)
+tokenizer.save_pretrained(final_output_dir)
+
+print("Hyperparameter tuning and final model training complete.")
+
