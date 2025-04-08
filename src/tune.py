@@ -42,9 +42,11 @@ print(f"Number of evaluation examples: {len(eval_dataset)}")
 def model_init(trial):
     print(f"Initializing fresh model instance...")
 
+    num_labels_for_model = 2 
+
     model = AutoModelForSequenceClassification.from_pretrained(
         config.MODEL_NAME,
-        num_labels = num_labels
+        num_labels=num_labels_for_model
     )
 
     return model
