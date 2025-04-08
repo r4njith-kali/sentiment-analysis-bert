@@ -83,11 +83,11 @@ After fine-tuning `bert-base-uncased` for **1 epoch** on the IMDb training set, 
 
 ## 📊 Training Progress
 
-![Training Plot](assets/images/Image 2025-04-08 at 9.55 PM (1).png)
+![Training Plot](assets/images/Image 2025-04-08 at 9.55 PM (1).jpg)
 
 ## 🧠 Model Summary
 
-![Model Summary](assets/images/Image 2025-04-08 at 9.55 PM (2).png)
+![Model Summary](assets/images/Image 2025-04-08 at 9.55 PM (2).jpg)
 
 
 ## Configuration
