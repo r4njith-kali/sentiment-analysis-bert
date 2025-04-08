@@ -113,7 +113,7 @@ trainer = Trainer(
 
 print("Starting hyperparameter search with Optuna...")
 
-best_run = trainer.hyperparamter_search(
+best_run = trainer.hyperparameter_search(
     hp_space = optuna_hp_space,
     n_trials = 10,
     direction = "maximize",
