@@ -81,6 +81,15 @@ After fine-tuning `bert-base-uncased` for **1 epoch** on the IMDb training set, 
 
 *(Evaluation performed using the test split of the IMDb dataset)*
 
+## 📊 Training Progress
+
+![Training Plot](assets/images/Image 2025-04-08 at 9.55 PM (1).png)
+
+## 🧠 Model Summary
+
+![Model Summary](assets/images/Image 2025-04-08 at 9.55 PM (2).png)
+
+
 ## Configuration
 
 Key hyperparameters and paths can be modified in `src/config.py`:
