@@ -98,6 +98,7 @@ Input Type	Review Snippet	Predicted Label	Confidence
 ⚖️ Mixed	"While the acting was strong... the movie struggled to maintain a consistent tone."	Negative	98.69%
 ⚖️ Mixed	"It's not great, but it's not terrible either... overall, it felt like a missed opportunity."	Negative	96.37%
 
+![CLI EXAMPLE](assets/images/cli.jpg)
 
 ## Configuration
 
