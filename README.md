@@ -89,6 +89,15 @@ After fine-tuning `bert-base-uncased` for **1 epoch** on the IMDb training set, 
 
 ![Model Summary](assets/images/model_summary.jpg)
 
+🚀 Model Performance – Sample Predictions
+Below are sample inputs and the corresponding predictions made by the fine-tuned BERT sentiment classifier. These examples were manually tested through the terminal interface.
+
+Input Type	Review Snippet	Predicted Label	Confidence
+✅ Positive	"From start to finish, this movie is a captivating work of art... I left the theater feeling inspired and full of hope."	Positive	99.64%
+❌ Negative	"This movie was a complete disappointment... Not even the talented cast could save this poorly written mess."	Negative	99.70%
+⚖️ Mixed	"While the acting was strong... the movie struggled to maintain a consistent tone."	Negative	98.69%
+⚖️ Mixed	"It's not great, but it's not terrible either... overall, it felt like a missed opportunity."	Negative	96.37%
+
 
 ## Configuration
 
