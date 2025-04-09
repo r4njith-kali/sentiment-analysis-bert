@@ -1,0 +1,27 @@
+<!-- templates/result.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Prediction Result</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; }
+        .result { margin-top: 20px; }
+        ul { list-style-type: none; padding: 0; }
+        li { padding: 5px 0; }
+    </style>
+</head>
+<body>
+    <h1>Prediction Result</h1>
+    <div class="result">
+        <p><strong>Input:</strong> {{ text }}</p>
+        <p><strong>Predicted Sentiment:</strong> {{ label }}</p>
+        <h2>Probabilities:</h2>
+        <ul>
+            {% for key, value in probabilities.items() %}
+                <li>{{ key }}: {{ "{:.4f}".format(value) }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+    <a href="/">Analyze another text</a>
+</body>
+</html>
