@@ -1,15 +1,13 @@
 import streamlit as st
-from src.predict import load_model_components, predict_sentiment
-from src.predict import MODEL_PATH
-import src.config
+from src.predict import load_model_components, predict_sentiment, MODEL_PATH, ID2LABEL
+import src.config as config
 
-MODEL_PATH = predict.MODEL_PATH
-DEVICE = config.DEVICE
-MAX_LENGTH = config.MAX_LENGTH
 
-ID2LABEL = predict.ID2LABEL
+@st.cache_resource(show_spinner="Loading model...")
+def load_model():
+    return load_model_components(MODEL_PATH)
 
-tokenizer, model = load_model_components(MODEL_PATH)
+tokenizer, model = load_model()
 
 st.set_page_config(page_title = "Sentiment Analyser", layout = "centered")
 st.title("Sentiment Analyzer using BERT")
