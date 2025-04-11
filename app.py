@@ -1,7 +1,7 @@
 import streamlit as st
-from predict import load_model_components, predict_sentiment
-from predict import MODEL_PATH
-import config
+from src.predict import load_model_components, predict_sentiment
+from src.predict import MODEL_PATH
+import src.config
 
 MODEL_PATH = predict.MODEL_PATH
 DEVICE = config.DEVICE
@@ -30,4 +30,4 @@ if st.button("Analyze Sentiment"):
             st.subheader("Confidence scores")
             st.bar_chart(probs)
 
-            
+
