@@ -1,0 +1,37 @@
+# POSITIVE
+
+"Absolutely loved every second of this film. The acting was superb and the storyline kept me hooked until the very end."
+
+"This movie was a masterpiece. The cinematography was breathtaking and the music gave me chills."
+
+"An inspiring and emotionally powerful film. I walked out of the theater feeling uplifted and full of hope."
+
+"A rare gem in modern cinema. Everything from the pacing to the dialogue was perfectly executed."
+
+"One of the best movies I’ve seen in years. It struck a perfect balance between action, emotion, and depth."
+
+#---------------------------
+# NEGATIVE 
+
+"What a waste of time. The plot was non-existent and the acting was laughably bad."
+
+"I had high expectations, but this film was a major letdown. Predictable and painfully slow."
+
+"Terrible movie. Poorly written, poorly directed, and completely forgettable."
+
+"Felt like it was made by amateurs. I kept checking my watch, waiting for it to end."
+
+"Don’t believe the hype. This movie was overacted, underdeveloped, and a complete mess."
+
+#---------------------------
+# NEUTRAL/MIXED
+
+"It had its moments, but overall it felt average. Not great, not terrible."
+
+"Decent performances and a few interesting scenes, but the movie lacked a strong narrative arc."
+
+"Some good ideas, but the execution was flawed. I wouldn’t watch it again, but I don’t regret seeing it."
+
+"The movie started off strong but lost momentum halfway through. Could’ve been much better."
+
+"Neither amazing nor awful. Just your typical weekend popcorn flick."

@@ -1,6 +1,9 @@
 import streamlit as st
+st.set_page_config(page_title = "Sentiment Analyser", layout = "centered")
+
 from src.predict import load_model_components, predict_sentiment, MODEL_PATH, ID2LABEL
-import src.config as config
+from src import config
+#import src.config as config
 
 
 @st.cache_resource(show_spinner="Loading model...")
@@ -9,7 +12,7 @@ def load_model():
 
 tokenizer, model = load_model()
 
-st.set_page_config(page_title = "Sentiment Analyser", layout = "centered")
+#st.set_page_config(page_title = "Sentiment Analyser", layout = "centered")
 st.title("Sentiment Analyzer using BERT")
 st.markdown("Enter a review or a comment and get its Sentiment Analyzed.")
 

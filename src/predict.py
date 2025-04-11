@@ -4,8 +4,12 @@ import os
 import torch
 import numpy as np
 from transformers import AutoTokenizer, AutoModelForSequenceClassification
+import sys
+sys.path.append(os.path.abspath(os.path.dirname(__file__)))
 import config  
 from data_loader import clean_html 
+
+
 
 MODEL_PATH = os.path.join(
     config.OUTPUT_DIR_BASE,
