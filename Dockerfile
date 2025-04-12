@@ -14,3 +14,5 @@ COPY . .
 
 EXPOSE 8501
 
+CMD ["streamlit", "run", "app.py", "--server.poty=8501", "--server.address=0.0.0.0"]
+
